@@ -5,6 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from models.city import City
+import models
+import os
 
 
 class State(BaseModel, Base):
@@ -14,18 +16,20 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
 
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state",
-                          cascade="all, delete, delete-orphan")
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", backref="state",
+                              cascade="all, delete, delete-orphan")
 
-    @property
-    def cities(self):
-        """
-        returns the list of City instances with state_id equals
-        to the current State.id
-        """
-        list_city = []
-        for city in models.storage.all(City).values():
-            if city.state_id == self.id:
-                list_city.append(city)
-        return list_city
+    else:
+        @property
+        def cities(self):
+            """
+            returns the list of City instances with state_id equals
+            to the current State.id
+            """
+            list_city = []
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    list_city.append(city)
+            return list_city
