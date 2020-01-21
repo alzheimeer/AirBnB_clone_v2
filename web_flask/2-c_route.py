@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ flask """
-from flask import Flask, request
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def h():
 @app.route('/c/<name>')
 def h2(name):
     '''print2'''
-    return 'C {}'.format(name)
+    return 'C {}'.format(name.replace('_', ' '))
 
 
 if __name__ == '__main__':
