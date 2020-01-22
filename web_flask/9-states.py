@@ -11,6 +11,7 @@ def teardown_db(self):
     '''close storage'''
     storage.close()
 
+
 @app.route('/states', strict_slashes=False)
 @app.route('/states/<n>', strict_slashes=False)
 def h1(n=None):
@@ -19,7 +20,7 @@ def h1(n=None):
     s.sort(key=lambda state: state.name)
     c = list(storage.all('City').values())
     c.sort(key=lambda cities: cities.name)
-    xid=None
+    xid = None
     for x in s:
         if x.id == n:
             xid = x.name
