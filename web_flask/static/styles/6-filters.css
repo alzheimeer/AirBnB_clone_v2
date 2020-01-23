@@ -66,6 +66,9 @@ button:hover {
 .locations .popover {
     margin-top: 1%;
 }
+.popover::-webkit-scrollbar {
+    display: none;
+}
 .custom-popover .scrollable {
     max-height: 300px;
     overflow-y: auto;
